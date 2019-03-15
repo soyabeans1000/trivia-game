@@ -12,7 +12,6 @@ function compTime ()
    
 timer = setInterval(_ => {
   count++
-  console.log(count)
  
   minutes = Math.floor(count/60)
 
