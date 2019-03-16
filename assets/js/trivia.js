@@ -1,70 +1,65 @@
 //set global variables
 count = 0
 gameEnded = true
-let answerTimer
+let totalQuestions = 3
+let totalCorrect = 0
+let totalWrong = 0
 
 
 questions = [{
   question: "Question1",
   choiceList: ["1choice1", "1choice2", "1Choice3", "1Choice4"],
-  answer: "1choice2"
+  answer: 'b'
 },
 {
   question: "Question2",
   choiceList: ["2choice1", "2choice2", "2Choice3", "2Choice4"],
-  answer: "2choice3"
+  answer: 'c'
 },
 {
   question: "Question3",
   choiceList: ["3choice1", "3choice2", "3Choice3", "3Choice4"],
-  answer: "3choice3"
+  answer: 'd'
 }]
 
-     
-function displayScore()
+//Add Listeners to the choices and check for correct answers (make a function to check for correct answers)
+ 
+function checkAnswer(answer)
 {
-  clearTimeout(scoreTimer)
- document.getElementById('content').textContent = "Score"
- //Give an option to play new game
+  let answerArray = answer.split(' ')
+  console.log(answerArray)  
 
 }
 
 
-function displaynextQuestion()
+
+function displayQuestion(index)
   {
-    clearTimeout(answerTimer)
-    document.getElementById('content').textContent = "next Question"
-
-    
-  }
-
-//Function to Display Answer
-function displayanswer()
+    let questionDiv = document.createElement('div')
+    questionDiv.innerHTML = questions[index].question
+    document.querySelector('#content').append(questionDiv)
+    console.log(questions[index].answer)
+  for (let i = 0; i < questions[index].choiceList.length; i++) 
   {
-    document.getElementById('content').textContent = "Answer"
-    answerTimer = setTimeout(displaynextQuestion, 3000)
-   //If last question, display answer 
+    let btnElem = document.createElement('a')
+    btnElem.textContent = questions[index].choiceList[i]
+    btnElem.className = 'waves-effect waves-light btn choiceBtn'
+    btnElem.setAttribute('data-value', 'Q' + index + ' ' + i)
+    console.log( 'Q' + index + i)
+    document.querySelector('#content').append(btnElem)
   }
-
- 
- 
-  let choiceSelection = document.createElement('input');
-  let choiceLabel = document.createElement('span');
-  let i = 1;
-
-  choiceSelection.setAttribute('type', 'radio');
-  choiceSelection.setAttribute('id', 'id');
-   choiceSelection.setAttribute('name', 'choices' + i);
-   choiceSelection.setAttribute('value', 'choices[0]');
-   choiceSelection.setAttribute('checked', true);
-   choiceSelection.setAttribute('disabled', false);
-   choiceLabel.innerHTML = "test"
-   document.getElementById('content').append(choiceSelection);
-  document.getElementById('content').append(choiceLabel);
+}
 
 
-  //Event Handler for the Question
-  document.getElementById("content").addEventListener("click", displayanswer);
 
 
-  
+for (i = 0; i < questions.length; i++)
+ displayQuestion(i)
+
+ document.addEventListener('click', e => {
+  // make sure thing clicked is random number button and that the game has not ended yet
+  if (e.target.className === 'waves-effect waves-light btn choiceBtn') {
+    let selectedAnswer =  e.target.getAttribute('data-value')
+    checkAnswer(selectedAnswer)
+  }
+})

@@ -28,11 +28,9 @@ body
     font-size:1.2em;
   }
 
-  /* .scoreboard
+  .choiceBtn
   {
-    font-size:1em;
-    line-height:1em;
-    font-family: "new_waltographregular";
-  } */
+    display:block;
+  }
 
   
