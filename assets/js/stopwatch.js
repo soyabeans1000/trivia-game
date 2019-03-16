@@ -5,12 +5,14 @@ let count = 0
 let displaySeconds = ""
 let displayMinutes = ""
 let totaltime = 2
+let timeUp
 
 
 function compTime ()
  { 
    
 timer = setInterval(_ => {
+  timeUp = false
   count++
  
   minutes = Math.floor(count/60)
@@ -36,10 +38,6 @@ if (minutes < 10)
   displayMinutes = '0' + minutes
 }
 
-if (minutes === 0 && seconds === 0 )
-{
-  clearInterval(timer)
-} 
 
 document.querySelector('#display').textContent = `${displayMinutes}:${displaySeconds}`
 }, 1000)
@@ -49,6 +47,13 @@ document.querySelector('#display').textContent = `${displayMinutes}:${displaySec
 
 
 compTime();
+
+
+// if (minutes === 0 && seconds === 0 )
+// {
+//   clearInterval(timer)
+//   timeUp = true
+// } 
 
 
 
