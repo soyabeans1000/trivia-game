@@ -66,12 +66,12 @@ questions = [{
 function checkAnswer(answer)
 {
   let answerArray = answer.split(' ')
-  console.log(answerArray)
+  //console.log(answerArray)
   
   let answerCode
   let QuestionCode = answerArray[0].substring(1)
 
-  console.log(QuestionCode)
+  //console.log(QuestionCode)
 
   switch (questions[QuestionCode].answer)
 {
@@ -97,25 +97,22 @@ function checkAnswer(answer)
 
 let realAnswer = "Q" + QuestionCode  + " " + answerCode
 
-console.log(realAnswer)
+//console.log(realAnswer)
 
 
   
 
 if (answer === realAnswer)
 {
-  console.log("MATCH")
+  //console.log("MATCH")
     totalCorrect++
 }
 else
 {
-  console.log("NOT MATCH")
+  //console.log("NOT MATCH")
   totalWrong++
  
 }
-
-
-
 }
 
 
@@ -125,23 +122,37 @@ function displayQuestion(index)
     questionDiv.innerHTML = questions[index].question
     questionDiv.className = 'Q'
     document.querySelector('#content').append(questionDiv)
-    console.log(questions[index].answer)
+    //console.log(questions[index].answer)
+
+
+
+
+
+
   for (let i = 0; i < questions[index].choiceList.length; i++) 
   {
-    let btnElem = document.createElement('a')
-    btnElem.textContent = questions[index].choiceList[i]
-    btnElem.className = 'waves-effect waves-light btn choiceBtn center-align'
-    btnElem.setAttribute('data-value', 'Q' + index + ' ' + i)
-    console.log( 'Q' + index + i)
-    document.querySelector('#content').append(btnElem)
+    let radioElem = document.createElement('input')
+    //radioElem.textContent = questions[index].choiceList[i]
+    radioElem.className = 'radio_choice'
+    radioElem.setAttribute('type', 'radio')
+    radioElem.setAttribute('value', 'Q' + index + ' ' + i)
+    radioElem.setAttribute('name', 'Q' + index)
+    //console.log( 'Q' + index + i)
+    document.querySelector('#content').append(radioElem)
+    document.querySelector('#content').append(questions[index].choiceList[i])
   }
+  let spacerDiv = document.createElement('div')
+  spacerDiv.style.marginBottom = '30px'
+  document.querySelector('#content').append(spacerDiv)
+
+
 }
 
 document.addEventListener('click', e => {
   // make sure thing clicked is random number button and that the game has not ended yet
-  if (e.target.className === 'waves-effect waves-light btn choiceBtn center-align') {
-    let selectedAnswer =  e.target.getAttribute('data-value')
-    console.log("Selected Answer =>" +  selectedAnswer )
+  if (e.target.className === 'radio_choice') {
+    let selectedAnswer =  e.target.getAttribute('value')
+   // console.log("Selected Answer =>" +  selectedAnswer )
     checkAnswer(selectedAnswer)
   }
 
@@ -153,29 +164,50 @@ if (e.target.id === "SubmitButton")
 
 function displayScore()
 {
-  document.querySelector('#content').textContent = `Total Correct:${totalCorrect}
-                                                    Total wrong: ${totalWrong}` 
-}
+  // document.querySelector('.main-game').textContent = `Total Correct:${totalCorrect}
+  // Total wrong: ${totalWrong}`
+
+
+
+ document.querySelector('.main-game').innerHTML = `<div class="score_board"><div class="score_title">Your Score</div> <br> Total Correct:${totalCorrect}<br>
+ Total wrong: ${totalWrong}</div><br>` 
+ clearInterval(timer)
+ let newgameBtn = document.createElement('button')
+ newgameBtn.innerHTML = 'New Game'
+ document.querySelector('.main-game').append(newgameBtn)
+
+ newgameBtn.addEventListener('click',init)
+
+ }
+
+
 
 function init(){
+
+ timeUp = false
+
+ document.querySelector('.main-game').innerHTML = `<h1>Trivia Game</h1>          
+<div class = "remaining_time">Time Remaining
+</div>
+<div id="display">00:00
+</div>
+<div id="content">
+</div>`   
+  compTime();
 for (i = 0; i < questions.length; i++)
  displayQuestion(i)
 
 
+
+     
+
  let submitBtn = document.createElement('button')
- 
- submitBtn.className = 'red waves-effect waves-light btn submit center-align'
+  submitBtn.className = 'red waves-effect waves-light btn submit'
  submitBtn.innerHTML = 'Submit Answers'
  submitBtn.id = "SubmitButton"
- document.querySelector('#content').append(submitBtn)
+  document.querySelector('#content').append(submitBtn)
 
-
- if (timeUp)
-displayScore()
-
- 
-}
+  }
 
 
 init()
- 

@@ -4,7 +4,7 @@ let seconds = 0
 let count = 0
 let displaySeconds = ""
 let displayMinutes = ""
-let totaltime = 2
+let totaltime = 1
 let timeUp
 
 
@@ -27,9 +27,9 @@ seconds = 60 - seconds
 displaySeconds = seconds
 displayMinutes = minutes
 
+
 if (seconds < 10 )
 {
-  
   displaySeconds = '0' + seconds
 }
 
@@ -39,21 +39,25 @@ if (minutes < 10)
 }
 
 
-document.querySelector('#display').textContent = `${displayMinutes}:${displaySeconds}`
-}, 1000)
+if (minutes === -1 && seconds === 60 )
+{
+ 
+  clearInterval(timer)
+  timeUp = true
+  displayMinutes = '00'
+  displaySeconds = '00'
+  displayScore()
+} 
 
+document.querySelector('#display').textContent = `${displayMinutes}:${displaySeconds}`
+
+}, 1000)
 
 }
 
 
-compTime();
 
 
-// if (minutes === 0 && seconds === 0 )
-// {
-//   clearInterval(timer)
-//   timeUp = true
-// } 
 
 
 
