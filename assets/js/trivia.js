@@ -142,7 +142,7 @@ function displayQuestion(index)
     document.querySelector('#content').append(questions[index].choiceList[i])
   }
   let spacerDiv = document.createElement('div')
-  spacerDiv.style.marginBottom = '30px'
+  spacerDiv.style.marginBottom = '15px'
   document.querySelector('#content').append(spacerDiv)
 
 
